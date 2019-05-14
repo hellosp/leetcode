@@ -44,14 +44,18 @@ class Solution {
         char[] cHaystack = haystack.toCharArray();
         char[] cNeedle = needle.toCharArray();
         
+        int[] next = getNextArray(cNeedle);
         int i = 0, j = 0;
         while (i < cHaystack.length && j < cNeedle.length) {
             if (cHaystack[i] == cNeedle[j]) {
                 i++;
                 j++;
             } else {
-                i = i - j + 1;
-                j = 0;
+                if (j > 0) {
+                    j = next[j - 1];
+                } else {
+                    i ++;
+                }
             }
         }
         if (j >= cNeedle.length) {
@@ -59,5 +63,30 @@ class Solution {
         } else {
             return -1;
         }
+    }
+    
+    private int[] getNextArray(char[] c) {
+        if (c.length == 0) {
+            return new int[0];
+        }
+        
+        int[] next = new int[c.length];
+        next[0] = 0;
+        int j = 0, i = 1;
+        while (i < c.length) {
+            if (c[i] == c[j]) {
+                next[i] = j + 1;
+                i++;
+                j++;
+            } else {
+                if (j > 0) {
+                    j = next[j - 1];
+                } else {
+                    next[i] = 0;
+                    i++;
+                }
+            }
+        }
+        return next;
     }
 }
