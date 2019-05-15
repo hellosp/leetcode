@@ -75,9 +75,7 @@ class Solution {
                     } else {
                         while (sMap.get(tmpWord) > wordsMap.get(tmpWord)) {
                             String startWord = s.substring(start, start + step);
-                            if (sMap.containsKey(startWord)) {
-                                sMap.put(startWord, sMap.get(startWord) - 1);
-                            }
+                            sMap.put(startWord, sMap.get(startWord) - 1);
                             if (sMap.get(startWord) < wordsMap.get(startWord)) {
                                 count--;
                             }
@@ -89,9 +87,7 @@ class Solution {
                         result.add(start);
                         
                         String startWord = s.substring(start, start + step);
-                        if (sMap.containsKey(startWord)) {
-                            sMap.put(startWord, sMap.get(startWord) - 1);
-                        }
+                        sMap.put(startWord, sMap.get(startWord) - 1);
                         count--;
                         start += step;
                     }
