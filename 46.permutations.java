@@ -30,7 +30,8 @@
  * 
  */
 class Solution {
-    List<List<Integer>> result = new ArrayList<>();
+    private List<List<Integer>> result = new ArrayList<>();
+    
     public List<List<Integer>> permute(int[] nums) {
         List<Integer> list = new ArrayList<>();
         dfs(nums, list);
