@@ -33,23 +33,26 @@ class Solution {
     private List<List<Integer>> result = new ArrayList<>();
     
     public List<List<Integer>> permute(int[] nums) {
+        boolean[] mark = new boolean[nums.length];
         List<Integer> list = new ArrayList<>();
-        dfs(nums, list);
+        dfs(nums, list, mark);
         return result;
     }
     
-    private void dfs(int[] nums, List<Integer> list) {
+    private void dfs(int[] nums, List<Integer> list, boolean[] mark) {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
             return;
         }
         
         for (int i = 0; i < nums.length; i++) {
-            if (list.contains(nums[i])) {
+            if (mark[i]) {
                 continue;
             }
+            mark[i] = true;
             list.add(Integer.valueOf(nums[i]));
-            dfs(nums, list);
+            dfs(nums, list, mark);
+            mark[i] = false;
             list.remove(Integer.valueOf(nums[i]));
         }
     }
