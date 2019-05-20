@@ -51,22 +51,17 @@ class Solution {
 
         char[] data = s.toCharArray();
         int[] dp = new int[data.length];
-        dp[0] = isValid(data[0]) ? 1 : 0;
+        dp[0] = data[0] != '0' ? 1 : 0;
         for (int i = 1; i < data.length; i++) {
             if (i == 1) {
-                dp[i] = (isValid(data[i]) ? dp[i - 1] : 0) +
+                dp[i] = (data[i] != '0' ? dp[i - 1] : 0) +
                         (isValid(data[i - 1], data[i]) ? 1 : 0);
             } else {
-                dp[i] = (isValid(data[i]) ? dp[i - 1] : 0) +
+                dp[i] = (data[i] != '0' ? dp[i - 1] : 0) +
                         (isValid(data[i - 1], data[i]) ? dp[i - 2] : 0);
             }
         }
         return dp[data.length - 1];
-    }
-
-    private boolean isValid(char a) {
-        int m = (int)(a - '0');
-        return m >= 1 && m <= 9;
     }
 
     private boolean isValid(char a, char b) {
