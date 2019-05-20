@@ -74,8 +74,7 @@ class Solution {
         String[] nums1 = version1.split("\\.");
         String[] nums2 = version2.split("\\.");
 
-        int i = 0;
-        while (i < nums1.length || i < nums2.length) {
+        for (int i = 0; i < nums1.length || i < nums2.length; i++) {
             long n1 = i < nums1.length ? Long.valueOf(nums1[i]) : 0;
             long n2 = i < nums2.length ? Long.valueOf(nums2[i]) : 0;
             if (n1 > n2) {
@@ -83,7 +82,6 @@ class Solution {
             } else if (n1 < n2) {
                 return -1;
             }
-            i++;
         }
         return 0;
     }
