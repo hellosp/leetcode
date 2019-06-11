@@ -40,29 +40,43 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length, n = nums2.length;
-        int len = m + n;
+        if (m > n) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
         
-        int pre = -1, cur = -1;
-        int p1 = 0, p2 = 0;
-        for (int i = 0; i <= len/2; i++) {
-            pre = cur;
-            if (p1 >= m) {
-                cur = nums2[p2++];
-            } else if (p2 >= n) {
-                cur = nums1[p1++];
+        int l = 0, r = m;
+        while (l <= r) {
+            int i = (l + r)/2;
+            int j = (m + n + 1)/2 - i;
+            
+            if (i < m && j > 0 && nums2[j - 1] > nums1[i]) {
+                l = i + 1;
+            } else if (i > 0 && j < n && nums1[i - 1] > nums2[j]) {
+                r = i - 1;
             } else {
-                if (nums1[p1] <= nums2[p2]) {
-                    cur = nums1[p1++];
+                int maxLeft = 0;
+                if (i == 0) {
+                    maxLeft = nums2[j - 1];
+                } else if (j == 0) {
+                    maxLeft = nums1[i - 1];
                 } else {
-                    cur = nums2[p2++];
+                    maxLeft = Math.max(nums1[i - 1], nums2[j - 1]);
                 }
+                if ((m + n)%2 == 1) {
+                    return maxLeft;
+                }
+                
+                int minRight = 0;
+                if (i == m) {
+                    minRight = nums2[j];
+                } else if (j == n) {
+                    minRight = nums1[i];
+                } else {
+                    minRight = Math.min(nums1[i], nums2[j]);
+                }
+                return (maxLeft + minRight) / 2.0;
             }
         }
-        
-        if (len%2 == 0) {
-            return (pre + cur)/2.0;
-        } else {
-            return cur;
-        }
+        return 0.0;
     }
 }
