@@ -52,13 +52,11 @@ class Solution {
         if(s == null || s.length() == 0) {
             return 0;
         }
-        
         s = s.trim();
         
         long prevNum = 0;
         int sum = 0;
         char prevOp = '+';
-        
         for(int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if(c == ' ') continue;
@@ -77,7 +75,7 @@ class Solution {
                 } else if (prevOp == '*') {
                     prevNum = prevNum * val;
                 } else if (prevOp == '/') {
-                    prevNum = prevNum/val;
+                    prevNum = prevNum / val;
                 }
             } else {
                 prevOp = c;
