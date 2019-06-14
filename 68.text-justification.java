@@ -110,9 +110,11 @@ class Solution {
             int count = last - index - 1;
             if (last == words.length || count == 0) {
                 for (int i = index; i < last; i++) {
-                    builder.append(words[i] + " ");
+                    builder.append(words[i]);
+                    if (i != last - 1) {
+                        builder.append(" ");
+                    }
                 }
-                builder.deleteCharAt(builder.length() - 1);
                 for (int i = builder.length(); i < maxWidth; i++) {
                     builder.append(" ");
                 }
