@@ -48,45 +48,34 @@
  * 
  */
 class Solution {
-    public List<String> findWords(char[][] board, String[] words) {
-        List<String> result = new ArrayList<>();
-        for (String word : words) {
-            if (exist(board, word)) {
-                result.add(word);
-            }
-        }
-        return result;
-    }
+    Set<String> result = new HashSet<>();
 
-    private boolean exist(char[][] board, String word) {
-        if (word.length() == 0) {
-            return false;
+    public List<String> findWords(char[][] board, String[] words) {
+        Trie trie = new Trie();
+        for (String str : words) {
+            trie.insert(str);
         }
-        char[] cWords = word.toCharArray();
+
+        boolean[][] mark = new boolean[board.length][board[0].length];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != cWords[0]) {
-                    continue;
-                }
-                boolean[][] mark = new boolean[board.length][board[0].length];
-                if (dfs(board, cWords, 0, i, j, mark)) {
-                    return true;
-                }
+                dfs(board, "", i, j, mark, trie);
             }
         }
-        return false;
+        return new ArrayList<String>(result);
     }
 
-    private boolean dfs(char[][] board, char[] words, int current, int i, int j, boolean[][] mark) {
-        if (current == words.length) {
-            return true;
+    private void dfs(char[][] board, String current, int i, int j, boolean[][] mark, Trie trie) {
+        if (i < 0 || j < 0 || i >= board.length || j >= board[i].length || mark[i][j]) {
+            return;
         }
 
-        if (i < 0 || j < 0 || i >= board.length || j >= board[i].length || mark[i][j]) {
-            return false;
+        current += board[i][j];
+        if (!trie.startsWith(current)) {
+            return;
         }
-        if (board[i][j] != words[current]) {
-            return false;
+        if (trie.search(current)) {
+            result.add(current);
         }
 
         mark[i][j] = true;
@@ -94,12 +83,81 @@ class Solution {
         for (int k = 0; k < 4; k++) {
             int x = i + d[k][0];
             int y = j + d[k][1];
-            if (dfs(board, words, current + 1, x, y, mark)) {
-                return true;
-            }
+            dfs(board, current, x, y, mark, trie);
         }
         mark[i][j] = false;
-        return false;
+    }
+
+    class TrieNode {
+        int num; // How many words go through this TrieNode
+        TrieNode[] son; // Collection of sons
+        boolean isEnd;
+        char val;
+        
+        public TrieNode() {
+            this.num = 0;
+            this.son = new TrieNode[26];
+            this.isEnd = false;
+        }
+    }
+
+    class Trie {
+        private TrieNode root;
+    
+        public Trie() {
+            root = new TrieNode();
+        }
+    
+        // Inserts a word into the trie.
+        public void insert(String word) {
+            if (word == null || word.length() == 0) {
+                return;
+            }
+
+            char[] cWords = word.toCharArray();
+            TrieNode node = this.root;
+            for (int i = 0; i < cWords.length; i++) {
+                int pos = (int)(cWords[i] - 'a');
+                if (node.son[pos] == null) {
+                    node.son[pos] = new TrieNode();
+                    node.son[pos].num++;
+                    node.son[pos].val = cWords[i];
+                }
+                else {
+                    node.son[pos].num++;
+                }
+                node = node.son[pos];
+            }
+            node.isEnd = true;
+        }
+    
+        // Returns if the word is in the trie.
+        public boolean search(String word) {
+            char[] cWords = word.toCharArray();
+            TrieNode node = this.root;
+            for (int i = 0; i < cWords.length; i++) {
+                int pos = (int)(cWords[i] - 'a');
+                if (node.son[pos] == null) {
+                    return false;
+                }
+                node = node.son[pos];
+            }
+            return node.isEnd;
+        }
+    
+        // Returns if there is any word in the trie that starts with the given prefix.
+        public boolean startsWith(String prefix) {
+            char[] cWords = prefix.toCharArray();
+            TrieNode node = this.root;
+            for (int i = 0; i < cWords.length; i++) {
+                int pos = (int)(cWords[i] - 'a');
+                if (node.son[pos] == null) {
+                    return false;
+                }
+                node = node.son[pos];
+            }
+            return true;
+        }
     }
 }
 
