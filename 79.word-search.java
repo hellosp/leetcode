@@ -40,13 +40,13 @@ class Solution {
         if (word.length() == 0) {
             return false;
         }
-        char begin = word.charAt(0);
+        char[] cWords = word.toCharArray();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j] != begin) {
+                if (board[i][j] != cWords[0]) {
                     continue;
                 }
-                if (dfs(board, word, 0, i, j)) {
+                if (dfs(board, cWords, 0, i, j)) {
                     return true;
                 }
             }
@@ -54,15 +54,15 @@ class Solution {
         return false;
     }
 
-    private boolean dfs(char[][] board, String word, int current, int i, int j) {
-        if (current == word.length()) {
+    private boolean dfs(char[][] board, char[] words, int current, int i, int j) {
+        if (current == words.length) {
             return true;
         }
-        
+
         if (i < 0 || j < 0 || i >= board.length || j >= board[i].length) {
             return false;
         }
-        if (board[i][j] != word.charAt(current)) {
+        if (board[i][j] != words[current]) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class Solution {
         for (int k = 0; k < 4; k++) {
             int x = i + d[k][0];
             int y = j + d[k][1];
-            if (dfs(board, word, current + 1, x, y)) {
+            if (dfs(board, words, current + 1, x, y)) {
                 return true;
             }
         }
