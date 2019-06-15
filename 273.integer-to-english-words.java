@@ -48,6 +48,10 @@
  */
 class Solution {
     public String numberToWords(int num) {
+        if (num == 0) {
+            return "Zero";
+        }
+
         StringBuilder builder = new StringBuilder();
 
         int b = num / 1000000000;
@@ -79,10 +83,6 @@ class Solution {
 
         if (num > 0) {
             builder.append(getNumWords(num));
-        }
-
-        if (builder.length() == 0) {
-            builder.append("Zero");
         }
         return builder.toString();
     }
