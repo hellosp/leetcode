@@ -46,8 +46,7 @@ class Solution {
                 if (board[i][j] != begin) {
                     continue;
                 }
-                boolean[][] mark = new boolean[board.length][board[0].length];
-                if (dfs(board, word, 0, i, j, mark)) {
+                if (dfs(board, word, 0, i, j)) {
                     return true;
                 }
             }
@@ -55,29 +54,29 @@ class Solution {
         return false;
     }
 
-    private boolean dfs(char[][] board, String word, int current,
-                        int i, int j, boolean[][] mark) {
+    private boolean dfs(char[][] board, String word, int current, int i, int j) {
         if (current == word.length()) {
             return true;
         }
-
-        if (i < 0 || j < 0 || i >= board.length || j >= board[i].length || mark[i][j]) {
+        
+        if (i < 0 || j < 0 || i >= board.length || j >= board[i].length) {
             return false;
         }
         if (board[i][j] != word.charAt(current)) {
             return false;
         }
 
-        mark[i][j] = true;
+        char c = board[i][j];
+        board[i][j] = '*';
         int[][] d = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         for (int k = 0; k < 4; k++) {
             int x = i + d[k][0];
             int y = j + d[k][1];
-            if (dfs(board, word, current + 1, x, y, mark)) {
+            if (dfs(board, word, current + 1, x, y)) {
                 return true;
             }
         }
-        mark[i][j] = false;
+        board[i][j] = c;
         return false;
     }
 }
