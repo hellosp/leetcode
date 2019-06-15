@@ -88,12 +88,16 @@ class Solution {
     }
 
     private String getNumWords(int num) {
+        String[] LESS_TEN = new String[]{"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+        String[] LESS_TWENTY = new String[]{"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+        String[] DECADES = new String[]{"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
         StringBuilder builder = new StringBuilder();
 
         int h = num / 100;
         num %= 100;
         if (h > 0) {
-            builder.append(getDigitalWord(h)).append(" ").append("Hundred");
+            builder.append(LESS_TEN[h]).append(" ").append("Hundred");
             if (num > 0) {
                 builder.append(" ");
             }
@@ -101,44 +105,20 @@ class Solution {
 
         int t = num / 10;
         if (t == 1) {
-            builder.append(getTensWord(num));
+            builder.append(LESS_TWENTY[num - 10]);
         } else if (t >= 2) {
-            builder.append(getDecadeWord(t));
+            builder.append(DECADES[t - 2]);
 
             num %= 10;
             if (num > 0) {
-                builder.append(" ").append(getDigitalWord(num));
+                builder.append(" ").append(LESS_TEN[num]);
             }
         } else {
             if (num > 0) {
-                builder.append(getDigitalWord(num));
+                builder.append(LESS_TEN[num]);
             }
         }
         return builder.toString();
-    }
-
-    private String getDigitalWord(int num) {
-        String[] dict = new String[]{"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
-        if (num >= 1 && num <= 9) {
-            return dict[num - 1];
-        }
-        return "";
-    }
-
-    private String getDecadeWord(int num) {
-        String[] dict = new String[]{"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
-        if (num >= 2 && num <= 9) {
-            return dict[num - 2];
-        }
-        return "";
-    }
-
-    private String getTensWord(int num) {
-        String[] dict = new String[]{"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-        if (num >= 10 && num <= 19) {
-            return dict[num - 10];
-        }
-        return "";
     }
 }
 
