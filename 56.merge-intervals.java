@@ -71,12 +71,7 @@ class Solution {
             }
         }
         list.add(new int[]{start, end});
-
-        int[][] result = new int[list.size()][];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
-        }
-        return result;
+        return list.toArray(new int[list.size()][]);
     }
 }
 
