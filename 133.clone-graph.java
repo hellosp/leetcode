@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /*
  * @lc app=leetcode id=133 lang=java
  *
@@ -66,32 +68,24 @@ class Node {
 */
 class Solution {
     public Node cloneGraph(Node node) {
+        HashMap<Integer, Node> map = new HashMap<>();
+        return dfs(node, map);
+    }
+
+    private Node dfs(Node node, HashMap<Integer, Node> map) {
         if (node == null) {
             return null;
         }
-
-        HashMap<Integer, Node> map = new HashMap<>();
-        LinkedList<Node> queue = new LinkedList<>();
-
-        Node root = new Node(node.val, new ArrayList<>());
-        map.put(root.val, root);
-
-        queue.add(node);
-        while (!queue.isEmpty()) {
-            Node curNode = queue.pop();
-            for (Node n : curNode.neighbors) {
-                Node newNode;
-                if (!map.containsKey(n.val)) {
-                    newNode = new Node(n.val, new ArrayList<>());
-                    map.put(newNode.val, newNode);
-                    queue.add(n);
-                } else {
-                    newNode = map.get(n.val);
-                }
-                map.get(curNode.val).neighbors.add(newNode);
+        if (map.containsKey(node.val)) {
+            return map.get(node.val);
+        } else {
+            Node newNode = new Node(node.val, new ArrayList<>());
+            map.put(newNode.val, newNode);
+            for (Node n : node.neighbors) {
+                newNode.neighbors.add(dfs(n, map));
             }
+            return newNode;
         }
-        return root;
     }
 }
 
