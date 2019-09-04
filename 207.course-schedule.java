@@ -63,8 +63,8 @@ class Solution {
         }
         
         for (int i = 0; i < prerequisites.length; i++) {
-            int p = prerequisites[i][0];
-            int q = prerequisites[i][1];
+            int p = prerequisites[i][1];
+            int q = prerequisites[i][0];
             adj[p][q] = true;
             inEdge[q]++;
         }
