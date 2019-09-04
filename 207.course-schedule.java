@@ -76,11 +76,12 @@ class Solution {
             }
         }
 
+        int count = 0;
         while (!queue.isEmpty()) {
             int n = queue.pop();
+            count++;
             for (int i = 0; i < numCourses; i++) {
                 if (adj[n][i]) {
-                    adj[n][i] = false;
                     inEdge[i]--;
                     if (inEdge[i] == 0) {
                         queue.add(i);
@@ -88,15 +89,7 @@ class Solution {
                 }
             }
         }
-
-        for (int i = 0; i < numCourses; i++) {
-            for (int j = 0; j < numCourses; j++) {
-                if (adj[i][j]) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return (count == numCourses);
     }
 }
 
