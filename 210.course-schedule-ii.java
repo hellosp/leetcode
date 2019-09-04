@@ -87,7 +87,6 @@ class Solution {
             ans.add(n);
             for (int i = 0; i < numCourses; i++) {
                 if (adj[n][i]) {
-                    adj[n][i] = false;
                     inEdge[i]--;
                     if (inEdge[i] == 0) {
                         queue.add(i);
@@ -96,19 +95,12 @@ class Solution {
             }
         }
 
-        for (int i = 0; i < numCourses; i++) {
-            for (int j = 0; j < numCourses; j++) {
-                if (adj[i][j]) {
-                    return new int[0];
-                }
-            }
+        if (ans.size() != numCourses) {
+            return new int[0];
         }
 
         int[] result = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
-            if (!ans.contains(i)) {
-                ans.add(i);
-            }
             result[i] = ans.get(i);
         }
         return result;
