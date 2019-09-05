@@ -67,17 +67,13 @@
  */
 class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
-        Character result = null;
-        for (char c : letters) {
-            if (c > target) {
-                result = c;
-                break;
-            }
+        int lo = 0, hi = letters.length;
+        while (lo < hi) {
+            int mi = lo + (hi - lo) / 2;
+            if (letters[mi] <= target) lo = mi + 1;
+            else hi = mi;
         }
-        if (result == null) {
-            result = letters[0];
-        }
-        return result;
+        return letters[lo % letters.length];
     }
 }
 
