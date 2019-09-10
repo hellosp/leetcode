@@ -56,8 +56,8 @@ class Solution {
         if (start > end) {
             return null;
         }
-        TreeNode node = new TreeNode(postorder[index]);
-        index--;
+
+        TreeNode node = new TreeNode(postorder[index--]);
         if (start == end) {
             return node;
         }
