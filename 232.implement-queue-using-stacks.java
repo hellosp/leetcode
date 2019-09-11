@@ -65,10 +65,7 @@ class MyQueue {
     /** Removes the element from in front of queue and returns that element. */
     public int pop() {
         if (stack2.isEmpty()) {
-            while (!stack1.isEmpty()) {
-                int n = stack1.pop();
-                stack2.push(n);
-            }
+            transfer();
         }
         return stack2.pop();
     }
@@ -76,10 +73,7 @@ class MyQueue {
     /** Get the front element. */
     public int peek() {
         if (stack2.isEmpty()) {
-            while (!stack1.isEmpty()) {
-                int n = stack1.pop();
-                stack2.push(n);
-            }
+            transfer();
         }
         return stack2.peek();
     }
@@ -87,6 +81,13 @@ class MyQueue {
     /** Returns whether the queue is empty. */
     public boolean empty() {
         return stack1.isEmpty() && stack2.isEmpty();
+    }
+
+    private void transfer() {
+        while (!stack1.isEmpty()) {
+            int n = stack1.pop();
+            stack2.push(n);
+        }
     }
 }
 
