@@ -72,12 +72,5 @@ class Solution {
         node.left = buildTree(inorder, postorder, start, partition - 1);
         return node;
     }
-
-    // public class TreeNode {
-    //     int val;
-    //     TreeNode left;
-    //     TreeNode right;
-    //     TreeNode(int x) { val = x; }
-    // }
 }
 
