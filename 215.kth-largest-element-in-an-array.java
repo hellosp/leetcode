@@ -37,21 +37,14 @@ import java.util.*;
  */
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o2 - o1;
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for (int num : nums) {
+            queue.add(num);
+            if (queue.size() > k) {
+                queue.poll();
             }
-        });
-        for (int i = 0; i < nums.length; i++) {
-            queue.add(nums[i]);
         }
-
-        int result = 0;
-        for (int i = 0; i < k; i++) {
-            result = queue.poll();
-        }
-        return result;
+        return queue.peek();
     }
 }
 
