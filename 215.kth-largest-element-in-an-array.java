@@ -37,14 +37,38 @@ import java.util.*;
  */
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        for (int num : nums) {
-            queue.add(num);
-            if (queue.size() > k) {
-                queue.poll();
+        k = nums.length - k;
+        int lo = 0, hi = nums.length - 1;
+        while (lo < hi) {
+            final int p = partition(nums, lo, hi);
+            if (p < k) {
+                lo = p + 1;
+            } else if (p > k) {
+                hi = p - 1;
+            } else {
+                break;
             }
         }
-        return queue.peek();
+        return nums[k];
+    }
+
+    private int partition(int[] a, int lo, int hi) {
+        int pivot = a[hi];
+        int i = lo;
+        for (int j = lo; j <= hi; j++) {
+            if (a[j] < pivot) {
+                swap(a, i, j);
+                i++;
+            }
+        }
+        swap(a, i, hi);
+        return i;
+    }
+
+    private void swap(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
     }
 }
 
