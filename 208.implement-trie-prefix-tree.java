@@ -46,10 +46,6 @@ class Trie {
     
     /** Inserts a word into the trie. */
     public void insert(String word) {
-        if (word == null || word.length() == 0) {
-            return;
-        }
-
         char[] cWords = word.toCharArray();
         TrieNode node = this.mRoot;
         for (int i = 0; i < cWords.length; i++) {
