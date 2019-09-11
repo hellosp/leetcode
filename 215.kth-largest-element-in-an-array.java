@@ -38,7 +38,7 @@ import java.util.*;
 class Solution {
     public int findKthLargest(int[] nums, int k) {
         shuffle(nums);
-        
+
         k = nums.length - k;
         int lo = 0, hi = nums.length - 1;
         while (lo < hi) {
@@ -62,16 +62,19 @@ class Solution {
     }
 
     private int partition(int[] a, int lo, int hi) {
-        int pivot = a[hi];
-        int i = lo;
-        for (int j = lo; j <= hi; j++) {
-            if (a[j] < pivot) {
-                swap(a, i, j);
-                i++;
+        int pivot = a[lo];
+        while (lo < hi) {
+            while (a[hi] >= pivot && lo < hi) {
+                hi--;
             }
+            a[lo] = a[hi];
+            while (a[lo] <= pivot && lo < hi) {
+                lo++;
+            }
+            a[hi] = a[lo];
         }
-        swap(a, i, hi);
-        return i;
+        a[lo] = pivot;
+        return lo;
     }
 
     private void swap(int[] a, int i, int j) {
