@@ -65,23 +65,16 @@ class Solution {
         if (root == null) {
             return null;
         }
+        
         int min = Math.min(p.val, q.val);
         int max = Math.max(p.val, q.val);
-        if (min < root.val && max > root.val) {
-            return root;
-        } else if (max < root.val) {
+        if (max < root.val) {
             return lowestCommonAncestor(root.left, p, q);
         } else if (min > root.val) {
             return lowestCommonAncestor(root.right, p, q);
         } else {
-            if (min == root.val) {
-                return p.val < q.val ? p : q;
-            }
-            if (max == root.val) {
-                return p.val > q.val ? p : q;
-            }
+            return root;
         }
-        return null;
     }
 }
 
