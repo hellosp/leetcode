@@ -44,11 +44,8 @@ import java.util.*;
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-
         Deque<TreeNode> stack = new ArrayDeque<>();
+        
         TreeNode cur = root;
         while (true) {
             while (cur != null) {
