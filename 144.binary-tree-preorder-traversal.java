@@ -44,21 +44,21 @@ import java.util.*;
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-
-        TreeNode cur = root;
-        while (true) {
-            while (cur != null) {
-                result.add(cur.val);
-                stack.push(cur);
-                cur = cur.left;
-            }
-            if (stack.isEmpty()) {
-                break;
-            }
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if (root == null) {
+            return result;
+        }
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
             TreeNode node = stack.pop();
-            cur = node.right;
+            result.add(node.val);
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+            if (node.left != null) {
+                stack.push(node.left);
+            }
         }
         return result;
     }
