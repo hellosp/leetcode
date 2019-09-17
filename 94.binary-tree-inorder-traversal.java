@@ -44,20 +44,25 @@ import java.util.*;
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        Deque<TreeNode> stack = new ArrayDeque<>();
-        
-        TreeNode cur = root;
-        while (true) {
-            while (cur != null) {
-                stack.push(cur);
-                cur = cur.left;
+        TreeNode cur = root, pre = null;
+        while (cur != null) {
+            if (cur.left == null) {
+                result.add(cur.val);
+                cur = cur.right;
+            } else {
+                pre = cur.left;
+                while (pre.right != null && pre.right != cur) {
+                    pre = pre.right;
+                }
+                if (pre.right == null) {
+                    pre.right = cur;
+                    cur = cur.left;
+                } else {
+                    pre.right = null;
+                    result.add(cur.val);
+                    cur = cur.right;
+                }
             }
-            if (stack.isEmpty()) {
-                break;
-            }
-            TreeNode node = stack.pop();
-            result.add(node.val);
-            cur = node.right;
         }
         return result;
     }
