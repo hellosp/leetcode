@@ -70,11 +70,12 @@ class BSTIterator {
     
     /** @return the next smallest number */
     public int next() {
+        int result = -1;
         while (cur != null) {
             if (cur.left == null) {
-                int result = cur.val;
+                result = cur.val;
                 cur = cur.right;
-                return result;
+                break;
             } else {
                 TreeNode pre = cur.left;
                 while (pre.right != null && pre.right != cur) {
@@ -85,13 +86,13 @@ class BSTIterator {
                     cur = cur.left;
                 } else {
                     pre.right = null;
-                    int result = cur.val;
+                    result = cur.val;
                     cur = cur.right;
-                    return result;
+                    break;
                 }
             }
         }
-        return -1;
+        return result;
     }
     
     /** @return whether we have a next smallest number */
