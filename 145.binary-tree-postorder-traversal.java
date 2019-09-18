@@ -44,23 +44,22 @@ import java.util.*;
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        if (root == null) {
-            return result;
-        }
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
+        List<Integer> result = new ArrayList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
+
+        TreeNode cur = root;
+        while (true) {
+            while (cur != null) {
+                result.add(0, cur.val);
+                stack.push(cur);
+                cur = cur.right;
+            }
+            if (stack.isEmpty()) {
+                break;
+            }
             TreeNode node = stack.pop();
-            result.add(node.val);
-            if (node.left != null) {
-                stack.push(node.left);
-            }
-            if (node.right != null) {
-                stack.push(node.right);
-            }
+            cur = node.left;
         }
-        Collections.reverse(result);
         return result;
     }
 }
