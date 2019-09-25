@@ -85,10 +85,10 @@
  */
 class Solution {
     public boolean isMatch(String str, String pattern) {
-        int s = 0, p = 0, match = 0, starIdx = -1;            
-        while (s < str.length()){
+        int s = 0, p = 0, match = 0, starIdx = -1;
+        while (s < str.length()) {
             // advancing both pointers
-            if (p < pattern.length()  && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))) {
+            if (p < pattern.length() && (pattern.charAt(p) == '?' || str.charAt(s) == pattern.charAt(p))) {
                 s++;
                 p++;
             }
