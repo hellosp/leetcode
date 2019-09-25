@@ -51,9 +51,9 @@ class Solution {
             return 2;
         }
 
-        int f1 = 1, f2 = 2;
-        for (int i = 2; i < n; i++) {
-            int tmp = f2;
+        int f1 = 1, f2 = 2, tmp;
+        for (int i = 3; i <= n; i++) {
+            tmp = f2;
             f2 = f1 + f2;
             f1 = tmp;
         }
