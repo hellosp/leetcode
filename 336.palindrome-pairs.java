@@ -1,3 +1,5 @@
+import java.util.*;
+
 /*
  * @lc app=leetcode id=336 lang=java
  *
@@ -48,44 +50,47 @@ class Solution {
             addWord(root, words[i], i);
         }
         for (int i = 0; i < words.length; i++) {
-            search(words, i, root, result);
+            search(root, words[i], i, result);
         }
         return result;
     }
 
     private void addWord(TrieNode root, String word, int index) {
         for (int i = word.length() - 1; i >= 0; i--) {
-            int j = word.charAt(i) - 'a';
-            if (root.next[j] == null) {
-                root.next[j] = new TrieNode();
-            }
             if (isPalindrome(word, 0, i)) {
                 root.list.add(index);
             }
-            root = root.next[j];
+
+            int pos = (int) (word.charAt(i) - 'a');
+            if (root.next[pos] == null) {
+                root.next[pos] = new TrieNode();
+            }
+            root = root.next[pos];
         }
 
         root.list.add(index);
         root.index = index;
     }
 
-    private void search(String[] words, int i, TrieNode root, List<List<Integer>> res) {
-        for (int j = 0; j < words[i].length(); j++) {
-            if (root.index >= 0 && root.index != i && isPalindrome(words[i], j, words[i].length() - 1)) {
-                res.add(Arrays.asList(i, root.index));
+    private void search(TrieNode root, String word, int index, List<List<Integer>> result) {
+        for (int i = 0; i < word.length(); i++) {
+            if (root.index >= 0 && root.index != index &&
+                    isPalindrome(word, i, word.length() - 1)) {
+                result.add(Arrays.asList(index, root.index));
             }
 
-            root = root.next[words[i].charAt(j) - 'a'];
-            if (root == null) {
+            int pos = (int) (word.charAt(i) - 'a');
+            if (root.next[pos] == null) {
                 return;
             }
+            root = root.next[pos];
         }
 
-        for (int j : root.list) {
-            if (i == j) {
+        for (int i : root.list) {
+            if (index == i) {
                 continue;
             }
-            res.add(Arrays.asList(i, j));
+            result.add(Arrays.asList(index, i));
         }
     }
 
@@ -95,7 +100,6 @@ class Solution {
                 return false;
             }
         }
-
         return true;
     }
 
